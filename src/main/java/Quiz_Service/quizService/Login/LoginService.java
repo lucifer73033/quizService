@@ -1,6 +1,7 @@
 package Quiz_Service.quizService.Login;
 
 import Quiz_Service.quizService.DTO.User;
+import Quiz_Service.quizService.Utilities.Annotations.CheckUserStatus;
 import Quiz_Service.quizService.Utilities.Exceptions.UserAlreadyExists;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,11 +37,9 @@ public class LoginService {
     Iterable<Integer> retrieveMarks(){
         return loginRepo.retrieveScores(this.getUser().getUsername());
     }
+    @CheckUserStatus
     ResponseEntity<?> retrieveAllUsers(){
         return ResponseEntity.status(500).body(loginRepo.findAll());
-    }
-    ResponseEntity<?> getMarks(String username){
-        return ResponseEntity.status(200).body(loginRepo.retrieveScores(username));
     }
     void logout(){
         user=null;

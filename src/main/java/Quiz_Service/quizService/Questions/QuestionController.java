@@ -1,6 +1,7 @@
 package Quiz_Service.quizService.Questions;
 
 import Quiz_Service.quizService.DTO.Question;
+import Quiz_Service.quizService.DTO.QuizAnswers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,5 +28,11 @@ public class QuestionController {
     ResponseEntity<?> findQuestions(@RequestParam int n,@RequestParam(required = false) String difficulty){
         if(difficulty==null) return ResponseEntity.status(200).body(questionService.findNQuestions(n));
         return ResponseEntity.status(200).body(questionService.findNQuestionsByDifficulty(n,difficulty));
+    }
+    @PostMapping("/submit")
+    ResponseEntity<?> uploadMarks(@RequestBody QuizAnswers quizAnswers){
+        System.out.println(quizAnswers.getAnswers());
+        System.out.println(quizAnswers.getIds());
+        return ResponseEntity.status(200).body(questionService.uploadMarks(quizAnswers));
     }
 }

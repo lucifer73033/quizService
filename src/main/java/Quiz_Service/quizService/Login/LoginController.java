@@ -30,8 +30,8 @@ public class LoginController {
         return loginService.retrieveAllUsers();
     }
     @GetMapping("/marks")
-    ResponseEntity<?> getMarks(@RequestParam String username){
-        return loginService.getMarks(username);
+    ResponseEntity<?> getMarks(){
+        return ResponseEntity.status(200).body(loginService.retrieveMarks());
     }
     @GetMapping("/logout")
     void logout(){

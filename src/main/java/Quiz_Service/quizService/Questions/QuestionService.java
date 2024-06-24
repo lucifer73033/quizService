@@ -1,5 +1,7 @@
 package Quiz_Service.quizService.Questions;
 
+import Quiz_Service.quizService.DTO.QuizAnswers;
+import Quiz_Service.quizService.Login.LoginService;
 import Quiz_Service.quizService.Utilities.Annotations.CheckUserStatus;
 import Quiz_Service.quizService.DTO.Question;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +13,12 @@ import java.util.List;
 @Service
 public class QuestionService {
     private final QuestionRepo questionRepo;
+    private final LoginService loginService;
 
 
-    public QuestionService(QuestionRepo questionRepo) {
+    public QuestionService(QuestionRepo questionRepo,LoginService loginService) {
         this.questionRepo = questionRepo;
+        this.loginService=loginService;
 
     }
     @CheckUserStatus
@@ -56,5 +60,21 @@ public class QuestionService {
             }
         }
         return ResponseEntity.status(200).header("Found_Status","questions found"+String.valueOf(temp)).body(resultSet);
+    }
+    int uploadMarks(QuizAnswers quizAnswers){
+        int score=calculateMarks(quizAnswers);
+        questionRepo.addScore(loginService.getUser().getUsername(),score);
+        return score;
+    }
+    int calculateMarks(QuizAnswers quizAnswers){
+        List<Integer> IDs=quizAnswers.getIds();
+        List<String> answers=quizAnswers.getAnswers();
+        int score=0;
+        for(int i=0;i<IDs.size();i++){
+            Integer ID=IDs.get(i);
+            String ans=answers.get(i);
+            if(questionRepo.findById(ID).get().getCorrectAns().equals(ans)) score++;
+        }
+        return score;
     }
 }
