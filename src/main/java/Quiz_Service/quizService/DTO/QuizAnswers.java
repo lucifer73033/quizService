@@ -1,11 +1,17 @@
 package Quiz_Service.quizService.DTO;
-
 import java.util.List;
 
+
+/**
+ * DTO Class just for HTTP Request data transfer
+ */
 public class QuizAnswers {
     private List<Integer> ids;
     private List<String> answers;
 
+
+
+    //Getters and Setters
     public List<Integer> getIds() {
         return ids;
     }
