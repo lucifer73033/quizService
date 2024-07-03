@@ -18,7 +18,7 @@ public class LoginController {
     /**
      * Http request for Students to sign up for service. False auth signifies doesnt have authorisation to make changes
      * question database
-     * @param username of the signing up user(Password management not yet implemented)
+     * @param username: of the signing up user(Password management not yet implemented)
      * @return User Already Exists ResponseEntity if user already exist
      */
     @PostMapping("/signup/student")
@@ -30,7 +30,7 @@ public class LoginController {
     /**
      * Http request for Teachers to sign up for service. True auth signifies, user has authorisation to make changes to
      * question database
-     * @param username of the signing up user(Password management not yet implemented)
+     * @param username: of the signing up user(Password management not yet implemented)
      * @return User Already Exists ResponseEntity if user already exist
      */
     @PostMapping("signup/teacher")

@@ -3,6 +3,8 @@ import Quiz_Service.quizService.Utilities.Exceptions.AuthorisationIssueException
 import Quiz_Service.quizService.Utilities.Exceptions.NoUserException;
 import Quiz_Service.quizService.Utilities.Exceptions.UserAlreadyExists;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -49,6 +51,17 @@ public class ControllerHandler {
     @ExceptionHandler(NoUserException.class)
     ResponseEntity<?> noUserExceptionHandler(){
         return ResponseEntity.status(500).body("Login first cheeky boy");
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        System.out.println("bababoeyy");
+        FieldError fieldError = ex.getBindingResult().getFieldError();
+        String message= null;
+        if (fieldError != null) {
+            message = fieldError.getDefaultMessage();
+        }
+        return ResponseEntity.status(500).body(message);
+
     }
 
 }

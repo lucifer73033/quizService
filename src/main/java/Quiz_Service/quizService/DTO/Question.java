@@ -1,4 +1,6 @@
 package Quiz_Service.quizService.DTO;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Column;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * Entity DTO Class for storing data into the DataBase and also for HTTP Requests
  */
+
 @Table("questions")
 public class Question{
 
@@ -21,13 +24,19 @@ public class Question{
     @Column("id")
     Integer id;
     @Column("question")
+    @NotNull(message="question cant be null")
     String question;
     @Column("optionA")
+    @NotNull(message="optionA cant be null")
     String optionA;
+    @NotNull(message="optionB cant be null")
+    @NotBlank(message="optionB cant be blank")
     @Column("optionB")
     String optionB;
     @Column("correctAns")
+            @NotNull(message="correctAns cant be null")
     String correctAns;
+    @NotNull(message="difficulty cant be null")
     @Column("difficulty")
     String difficulty;
 

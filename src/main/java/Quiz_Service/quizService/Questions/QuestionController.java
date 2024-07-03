@@ -1,7 +1,10 @@
 package Quiz_Service.quizService.Questions;
 import Quiz_Service.quizService.DTO.Question;
 import Quiz_Service.quizService.DTO.QuizAnswers;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * RestController class to handle all Question management related HTTP Requests
  */
 @RestController
+@Validated
 public class QuestionController {
     private final QuestionService questionService;//to handle all the data processing needs
 
@@ -23,7 +27,8 @@ public class QuestionController {
      * @return none
      */
     @PostMapping("/question")
-    void addQuestion(@RequestBody Question question){
+    void addQuestion(@Valid @RequestBody Question question, Errors errors){
+        if(errors.hasErrors()) System.out.println("bababababaa");
         questionService.addQuestion(question);
     }
 
